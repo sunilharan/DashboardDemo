@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="step==1">
+    <ion-item>
+      <ion-input [(ngModel)]="dashBoardName" placeholder="Add dashboard name"></ion-input>
+    </ion-item>
+    <ion-button (click)="addDashBoard()" [disabled]="!dashBoardName">
+      Next
+    </ion-button>
+  </div>
+  <div *ngIf="step==2">
+    <ion-item *ngFor="let item of dashboardList">
+      <ion-label>{{item.name}}</ion-label>
+      <ion-checkbox [(ngModel)]="item.isSelected"></ion-checkbox>
+    </ion-item>
+    <ion-button (click)="saveDashBoardItems()" [disabled]="!isDashBoardItemExist()">
+      Submit
+    </ion-button>
+  </div>
+</ion-content>

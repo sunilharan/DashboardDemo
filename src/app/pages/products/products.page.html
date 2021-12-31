@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{dashBoardDetails?.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  
+  <div class="top-items">
+    <div class="top-box"
+      [class.active]="item.id == selectedItem?.id"
+      (click)="showInfo(item)" *ngFor="let item of dashBoardDetails?.dashboardItems"
+    >
+      <h3>{{item.name}}</h3>
+    </div>
+  </div>
+
+  <div class="content" *ngIf="!isLoading && productList && productList.length>0">
+    <ion-label *ngIf="!selectedItem.isList">
+      <h1>{{totalProduct}}</h1>
+    </ion-label>
+    <div *ngIf="selectedItem.isList">
+      <ion-item class="product-item" *ngFor="let product of productList">
+        <ion-thumbnail *ngIf="!selectedItem.isCategory" slot="start">
+          <ion-img [src]="product.image"></ion-img>
+        </ion-thumbnail>
+        <ion-label *ngIf="selectedItem.isCategory">
+          <h3>{{product}}</h3>
+        </ion-label>
+        <ion-label *ngIf="!selectedItem.isCategory">
+          <h3>{{product.title}}</h3>
+          <p>{{product.category}}</p>
+          <p>{{product.description}}</p>
+        </ion-label>
+        <ion-note *ngIf="!selectedItem.isCategory">
+          <ion-text>{{product.price}}</ion-text>
+        </ion-note>
+      </ion-item>
+    </div>
+  </div>
+  <div class="loading" *ngIf="isLoading">
+    <ion-spinner></ion-spinner>
+  </div>
+  <div class="no-item" *ngIf="!isLoading && (!productList || !(productList && productList.length>0))">
+    No prodcts found!
+  </div>
+</ion-content>
